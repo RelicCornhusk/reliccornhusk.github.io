@@ -1,9 +1,10 @@
 ---
 layout: post
 title: Creating Azure Pipelines from GitHub Repos using the API
-date: 2024-08-03 21:11 -0400
+date: 2024-08-03 21:11:00
 categories: CI/CD ADO
 tags: CI/CD ADO
+featured: true
 ---
 For the past few months, I have been leading an enterprise-scale migration of a customer from Microsoft's legacy Team Foundation Server to GitHub/Azure DevOps. We are migrating several teams' source codes from TFVC to Git (using the git-tfs tool) and converting hundreds of XAML build definitions into Azure Pipelines YAML files. Suffice to say, we need to get creative at times to accomplish such a feat.
 
