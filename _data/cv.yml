@@ -2,11 +2,9 @@
   type: map
   contents:
     - name: Full Name
-      value: Albert Einstein
-    - name: Date of Birth
-      value: 14th March 1879
+      value: Vitor Muzzi Magalhaes
     - name: Languages
-      value: English, German
+      value: English, French, Spanish, Portuguese
 
 - title: Education
   type: time_table
@@ -31,8 +29,8 @@
 - title: Experience
   type: time_table
   contents:
-    - title: Professor of Theoretical Physics
-      institution: Institute for Advanced Study, Princeton University
+    - title: Associate Consultant
+      institution: Slalom Consulting
       year: 1933 - 1955
       description:
         - Description 1.

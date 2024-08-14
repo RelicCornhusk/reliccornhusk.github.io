@@ -3,9 +3,9 @@
 # -----------------------------------------------------------------------------
 
 title: blank # the website title (if blank, full name will be used instead)
-first_name: Vitor
+first_name: vitor
 middle_name:
-last_name: Muzzi Magalhaes
+last_name: muzzi magalhaes
 email: vitormuzzi@gmail.com
 description: > # the ">" symbol means to ignore newlines until "footer_text:"
   Based in Montreal, Canada. This is a space where I share my latest findings, interests and projects related to my work as a DevOps engineer.
@@ -15,7 +15,7 @@ footer_text: >
   Photos from <a href="https://unsplash.com" target="_blank">Unsplash</a>.
 keywords: devops, platform-engineering, sre # add your own keywords or leave empty
 lang: en # the language of your site (for example: en, fr, cn, ru, etc.)
-icon: ⚙️ # the emoji used as the favicon (alternatively, provide image name in /assets/img/)
+icon: 🧑🏽‍💻 # the emoji used as the favicon (alternatively, provide image name in /assets/img/)
 
 url: https://reliccornhusk.github.io # the base hostname & protocol for your site
 baseurl: # the subpath of your site, e.g. /blog/. Leave blank for root

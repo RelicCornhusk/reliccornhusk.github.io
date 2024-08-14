@@ -2,7 +2,7 @@
 layout: about
 title: about
 permalink: /
-subtitle: Platform/DevOps Engineer based in Montreal, Canada
+subtitle: Platform/DevOps engineer based in Montreal, Canada
 
 profile:
   align: right
@@ -21,14 +21,14 @@ I currently work at [Slalom](https://www.slalom.com/ca) where I offer consulting
 
 Here is what I excel at:
 
-‣ Setting up and managing enterprise-scale cloud environments on `AWS`, `Azure` and `GCP` using Infrastructure as Code tools like `Terraform`.
+‣ Setting up and managing enterprise-scale cloud environments on `AWS`, `Azure` and `GCP` using Infrastructure as Code tools like `Terraform` ☁️
 
-‣ Designing CI/CD flows on `GitHub Actions` using `GitOps` as a driving principle.
+‣ Designing CI/CD flows on `GitHub Actions` using `GitOps` as a driving principle 🚀
 
-‣ Building containerized applications and cluster management on `Kubernetes` and `Podman`.
+‣ Building containerized applications and cluster management on `Kubernetes`, `Docker` and `Podman` 🚢
 
-‣ Creating automation using `Python scripting` and `Ansible`.
+‣ Automating workloads using `Python`, `Bash` and `Ansible` 🧑🏽‍💻
 
-‣ Systems administration: a bit of a `Linux` fanatic.
+‣ SysAdmin: I'm a bit of a `Linux` fanatic and a `networking` nerd 🐧
 
 If this resonates with you, you can find my contact info below 👇
