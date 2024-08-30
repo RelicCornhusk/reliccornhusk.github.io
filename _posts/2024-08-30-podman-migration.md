@@ -1,6 +1,9 @@
 ---
 layout: post
 title: Migrating from Docker to Podman
+subtitle: "How to transform Docker containers into Kubernetes-ready pods"
+tags: Podman, Docker, Kubernetes
+giscus_comments: true
 ---
 
 ## Background
