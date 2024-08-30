@@ -31,7 +31,7 @@ I began by setting up a new user on the host without sudo access. Using a privil
 
 So here is where it started getting tricky. I thought I would be able to simply spin up all my containers with the new user and call it a day. However, after a few frustrating config sessions where I could not realize why my containers were not reachable, I started reading their logs and realizing they could no longer access their configuration files. So I tried recursively `chown`ing' (changing the ownership of files) all of the required files to the podman user, but that still did not work. I took a step back and really got down to the nitty-gritty of how Podman manages Linux permissions, a topic which had always been a bit daunting for me. Fortunately there are some amazing blog posts by Red Hat on the topic which taugh me a lot (see links at the end). Let's hope I don't lose you, dear reader, with the explanation ahead.
 
-## Linux permissions around containers
+### Linux permissions around containers
 
 Containers (not just Podman) make use of an ingenious UNIX feature called user namespacing to ensure your container can do essentially the same things as your user would but without needing to use the same identity  (UID and GID) as your user. In the case of Podman, this means that when you run any container, rootful or rootless, that container will be running by default under that user's namespace as the root user of that namespace. Just like a VM that "thinks" it is its own machine but resides in another host, the container's root user "thinks" it is the root user (UID 0 and GID 0), but in reality it is inside of another user's namespace. Here is a quick demo to help wrap your head around that:
 
@@ -45,7 +45,7 @@ To add to the complexity in my case, the rootless Podman container was running w
 
 To try to abstract all of this, they created the weirdly-named command `podman unshare` to allow you to issue any command from inside Podman's user namespace without needing to spin a container and `exec` into it. This is especially useful for this type of situation, where it allows you to abstract the mapping of UIDs and GIDs and simply issue the command from the container's perspective. Thus, I was able to run `podman unshare chown -R 1000:1000 /data` to give the user with ID 1000 inside the container ownership over the files required by the containers.
 
-## Deploying and versioning
+### Deploying and versioning
 
 After recursively changing the ownership of the files managed by the container, I was able to deploy everything and join the containers into pods as desired. I opted mostly for turning each container into its own pod and joined them all under the same bridge network to facillitate the integration with the reverse proxy. The next step was to generate Kubernetes definition files for these pods to version the deployment itself and make changes declaratively to my services. I did so by running `podman kube generate` to each of the pods and later redeployed them with `podman kube play` to ensure everything worked as before, and it did.
 
