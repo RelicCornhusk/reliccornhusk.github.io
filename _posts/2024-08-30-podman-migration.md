@@ -5,6 +5,7 @@ subtitle: "How to transform Docker containers into Kubernetes-ready pods"
 tags: Podman, Docker, Kubernetes
 giscus_comments: true
 ---
+![Podman -> Docker](/assets/img/podman-post.png)
 
 ## Background
 
