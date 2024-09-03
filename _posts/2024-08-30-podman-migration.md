@@ -5,6 +5,7 @@ subtitle: "How I migrated from Docker containers to Kubernetes-ready Podman pods
 tags: Podman, Docker, Kubernetes
 giscus_comments: true
 thumbnail: assets/img/podman-post.png
+og_image: "https://www.vitormuzzi.dev/assets/img/podman-post-800.webp"
 ---
 
 {% include figure.liquid loading="eager" path="assets/img/podman-post.png" class="img-fluid rounded z-depth-1" %}
