@@ -39,7 +39,7 @@ I began by setting up a new user on the host without sudo access. Using a privil
 1. Install [podman-compose](https://github.com/containers/podman-compose) if migrating from docker-compose
 1. `su -- podman`: login as the 'podman' user.
 
-Following that I thought I would be able to simply spin up all my containers in my Docker Compose files with the new user and call it a day. Nope. After spending a while trying to understand why my containers were not reachable, I started reading their logs before they exited and realized they could no longer access their configuration files. So I tried recursively changing the ownership of all of the required files to the podman user, but that still did not work. I took a step back and really got down to the nitty-gritty of how Podman manages Linux permissions, a topic which had always been a bit daunting for me. Fortunately there are some amazing blog posts by Red Hat on the topic which taugh me a lot (see [Further reading](#further-reading)). Let's hope I don't lose you, dear reader, with the explanation ahead.
+Following that I thought I would be able to simply spin up all my containers in my Docker Compose files with the new user and call it a day. Nope. After spending a while trying to understand why my containers were not reachable, I started reading their logs before they exited and realized they could no longer access their configuration files. So I tried recursively changing the ownership of all of the required files to the podman user, but that still did not work. I took a step back and really got down to the nitty-gritty of how Podman manages Linux permissions, a topic which had always been a bit daunting for me. Fortunately there are some amazing blog posts by Red Hat on the topic which taugh me a lot (see [Further reading](##further-reading)). Let's hope I don't lose you, dear reader, with the explanation ahead.
 
 ### Linux permissions around containers
 
@@ -63,6 +63,6 @@ To fully replicate all of the functionalities I had before, I still had to come 
 
 So now, all of my containers became _rootless, kubernetes-ready, version-controlled_ pods and services managed by a kubelet-like tool to manage them as a systemd service. I think I've reached container runtime nirvana.
 
-# Further reading
+## Further reading
 - [Make systemd better for Podman with Quadlet](https://www.redhat.com/sysadmin/quadlet-podman)
 - [Running rootless Podman as a non-root user](https://www.redhat.com/sysadmin/rootless-podman-makes-sense)
