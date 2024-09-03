@@ -6,6 +6,9 @@ tags: Podman, Docker, Kubernetes
 giscus_comments: true
 thumbnail: assets/img/podman-post.png
 ---
+
+{% include figure.liquid loading="eager" path="assets/img/podman-post.png" class="img-fluid rounded z-depth-1" %}
+
 ## Background
 
 For the past few years, I have used Docker and Docker Compose extensively to self-host applications on my "homelab server" -- a nice way of calling an old laptop running Debian 24/7 mounted to the underside of my desk. I have been doing this mainly to self host a stack of open-source applications centered around media management.  Self-hosting services taught me a lot about Linux systems administration, networking and all things containers. I cannot recommend this enough as a personal project for any DevOps engineer. 
