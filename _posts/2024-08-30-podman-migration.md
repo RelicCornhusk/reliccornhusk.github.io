@@ -12,13 +12,13 @@ og_image: "https://www.vitormuzzi.dev/assets/img/podman-post-800.webp"
 
 ## Background
 
-For the past few years, I have used Docker and Docker Compose extensively to self-host applications on my "homelab server" -- a nice way of calling an old laptop running Debian 24/7 mounted to the underside of my desk. I have been doing this mainly to self host a stack of open-source applications centered around media management.  Self-hosting services taught me a lot about Linux systems administration, networking and all things containers. I cannot recommend this enough as a personal project for any DevOps engineer. 
+For the past few years, I have used Docker and Docker Compose extensively to self-host applications on my "homelab server" -- a nice way of calling an old laptop running Debian 24/7 mounted to the underside of my desk. I have been doing this mainly to self host a stack of open-source applications centered around media management. Self-hosting services taught me a lot about Linux systems administration, networking and all things containers. I cannot recommend this enough as a personal project for any DevOps engineer.
 
-For my learning purposes, the stack itself is not so interesting as much as *how* it's deployed, and I'm constantly tweaking it to test out new tools and automations. I've already created Ansible playbooks that deploy it from scratch, Docker Compose files to version the containers and their configuration, connected all the services behind a reverse proxy using Caddy, and in the future I might migrate it to Kubenertes using a single-node cluster with K3S. But before that, I wanted to give Podman a try.
- 
+For my learning purposes, the stack itself is not so interesting as much as _how_ it's deployed, and I'm constantly tweaking it to test out new tools and automations. I've already created Ansible playbooks that deploy it from scratch, Docker Compose files to version the containers and their configuration, connected all the services behind a reverse proxy using Caddy, and in the future I might migrate it to Kubenertes using a single-node cluster with K3S. But before that, I wanted to give Podman a try.
+
 ## Why migrate to Podman?
 
-For me, it boils down to its greater compatibility with Kubernetes and its daemonless architecture. To elaborate on the former, [Kubernetes has deprecated their Docker runtime support](https://kubernetes.io/blog/2020/12/02/dont-panic-kubernetes-and-docker/) in favour of runtimes compliant with the Container Runtime Interface (CRI), like Podman, containerd or CRI-O. This is understandable, since supoprting Docker meant maintaining Dockershim, an appendage needed to make it work with Kubernetes. To add to that, the Docker project has taken a turn away from its original free open source philosophy in recent years as it started implementing a subscription model and restricting the usability of the tool for free users. 
+For me, it boils down to its greater compatibility with Kubernetes and its daemonless architecture. To elaborate on the former, [Kubernetes has deprecated their Docker runtime support](https://kubernetes.io/blog/2020/12/02/dont-panic-kubernetes-and-docker/) in favour of runtimes compliant with the Container Runtime Interface (CRI), like Podman, containerd or CRI-O. This is understandable, since supoprting Docker meant maintaining Dockershim, an appendage needed to make it work with Kubernetes. To add to that, the Docker project has taken a turn away from its original free open source philosophy in recent years as it started implementing a subscription model and restricting the usability of the tool for free users.
 
 For this reason, open-source alternatives like RedHat's Podman has started gaining a lot of traction. Additionally, if like me your end-goal is working with Kubernetes, Podman allows you to convert your Podman pods to Kubernetes definitions files and to build pods from Kubernetes files with neat commands like `podman kube generate` and `podman kube play`.
 
@@ -28,7 +28,7 @@ Finally, if you know how to use Docker, you already know how to use Podman. For 
 
 ## The migration itself: the good, the bad and the ugly
 
-The process of migrating everything was unfortunately not as simple as running as putting down the Docker containers and bringing them back up with Podman. Maybe it could have been if I had opted to use Podman with a root account, but then it would be too easy! So here is an overview of the steps I took to get the all the same functionalities out of Podman using rootless containers, along with what I learned along the way.
+The process of migrating everything was unfortunately not as simple as putting down the Docker containers and bringing them back up with Podman. Maybe it could have been if I had opted to use Podman with a root account, but then it would be too easy! So here is an overview of the steps I took to get the all the same functionalities out of Podman using rootless containers, along with what I learned along the way.
 
 ### Setting up Podman and creating a separate user
 
@@ -60,10 +60,11 @@ To try to abstract all of this, Podman's developers created the weirdly-named co
 
 After recursively changing the ownership of the files managed by the container, I was able to deploy everything and join the containers into pods as desired. I opted mostly for turning each container into its own pod and joined them all under the same bridge network to facillitate the integration with the reverse proxy. The next step was to generate Kubernetes definition files for these pods to version the deployment itself and make changes declaratively to my services. I did so by running `podman kube generate` to each of the pods and later redeployed them with `podman kube play` to ensure everything worked as before, and it did.
 
-To fully replicate all of the functionalities I had before, I still had to come up with a way for bringing up the containers automatically upon server reboot. With Docker, upon each reboot its daemon would bring up any container with a restart policy of 'always' or 'unless-stopped'. With Podman's daemonless architecture, this means you are in charge of defining systemd services for your containers/pods. They made this a lot easier with version 4.4 through a tool called Quadlet that allows you to create systemd services through reusable, simplified configuration files. Think of it like a `k8s` kubelet that got squashed and became a *quad*let. It accepts using Kubernetes definition files in their recipe files, which made everything easier. 
+To fully replicate all of the functionalities I had before, I still had to come up with a way for bringing up the containers automatically upon server reboot. With Docker, upon each reboot its daemon would bring up any container with a restart policy of 'always' or 'unless-stopped'. With Podman's daemonless architecture, this means you are in charge of defining systemd services for your containers/pods. They made this a lot easier with version 4.4 through a tool called Quadlet that allows you to create systemd services through reusable, simplified configuration files. Think of it like a `k8s` kubelet that got squashed and became a *quad*let. It accepts using Kubernetes definition files in their recipe files, which made everything easier.
 
 So now, all of my containers became _rootless, kubernetes-ready, version-controlled_ pods and services managed by a kubelet-like tool to manage them as a systemd service. I think I've reached container runtime nirvana.
 
 ## Further reading
+
 - [Make systemd better for Podman with Quadlet](https://www.redhat.com/sysadmin/quadlet-podman)
 - [Running rootless Podman as a non-root user](https://www.redhat.com/sysadmin/rootless-podman-makes-sense)
